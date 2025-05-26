@@ -7,8 +7,7 @@
     "start": "node api/scrape.js"
   },
   "dependencies": {
-    "@sparticuz/chromium": "^133.0.0",
-    "puppeteer": "^24.9.0",
+    "chrome-aws-lambda": "^10.1.0",
     "puppeteer-core": "^24.9.0"
   },
   "engines": {

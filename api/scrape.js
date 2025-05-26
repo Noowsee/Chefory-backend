@@ -15,15 +15,16 @@ export default async function handler(req, res) {
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath,
-      headless: chromium.headless,
+      headless: true,
     });
 
     const page = await browser.newPage();
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20000 });
+    await page.goto(url, {
+      waitUntil: "domcontentloaded",
+      timeout: 20000,
+    });
 
     let html = await page.content();
-
-    await browser.close();
 
     html = html
       .replace(/<script[\s\S]*?<\/script>/gi, "")
@@ -31,10 +32,13 @@ export default async function handler(req, res) {
       .replace(/\s+/g, " ")
       .slice(0, 15000);
 
+    await browser.close();
     return res.status(200).json({ html });
-  } catch (err) {
+  } catch (error) {
+    console.error("❌ Feil i scraping:", error);
     if (browser) await browser.close();
-    console.error("❌ Puppeteer-feil:", err.message);
-    return res.status(500).json({ error: "Klarte ikke å hente HTML" });
+    return res
+      .status(500)
+      .json({ error: "Klarte ikke å hente HTML fra backend" });
   }
 }
