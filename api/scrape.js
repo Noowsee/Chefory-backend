@@ -21,7 +21,13 @@ export default async function handler(req, res) {
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
 
-    const html = await page.content();
+    let html = await page.content();
+
+    html = html
+      .replace(/<script[\s\S]*?<\/script>/gi, "") // fjern script
+      .replace(/<style[\s\S]*?<\/style>/gi, "") // fjern style
+      .replace(/\s+/g, " ") // trim whitespace
+      .slice(0, 15000); // maks lengde
 
     res.status(200).json({ html });
   } catch (err) {
