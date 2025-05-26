@@ -21,9 +21,7 @@ export default async function handler(req, res) {
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
 
-    let html = await page.content();
-
-    html = html
+    const html = response.data
       .replace(/<script[\s\S]*?<\/script>/gi, "") // fjern script
       .replace(/<style[\s\S]*?<\/style>/gi, "") // fjern style
       .replace(/\s+/g, " ") // trim whitespace
