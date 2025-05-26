@@ -1,5 +1,3 @@
-import chromium from "@sparticuz/chromium";
-import puppeteer from "puppeteer-core";
 import puppeteer from "puppeteer";
 
 export default async function handler(req, res) {
