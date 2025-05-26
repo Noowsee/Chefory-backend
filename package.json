@@ -1,7 +1,12 @@
 {
+  "name": "recipe-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node api/scrape.js"
+  },
   "dependencies": {
-    "@sparticuz/chromium-min": "^133.0.0",
-    "puppeteer": "^24.9.0",
-    "puppeteer-core": "^24.9.0"
+    "puppeteer": "^21.3.8"
   }
 }
