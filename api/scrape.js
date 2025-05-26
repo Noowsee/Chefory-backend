@@ -1,4 +1,4 @@
-import chromium from "@sparticuz/chromium-min";
+import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 
 export default async function handler(req, res) {
@@ -11,8 +11,6 @@ export default async function handler(req, res) {
   let browser = null;
 
   try {
-    console.log("🚀 Starter puppeteer");
-
     browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -25,10 +23,9 @@ export default async function handler(req, res) {
 
     const html = await page.content();
 
-    console.log("✅ HTML hentet");
     res.status(200).json({ html });
   } catch (err) {
-    console.error("❌ Feil under scraping:", err.message);
+    console.error("Feil under scraping:", err);
     res
       .status(500)
       .json({ error: "Klarte ikke hente HTML", detail: err.message });
