@@ -1,11 +1,12 @@
 {
-  "version": 2,
-  "functions": {
-    "api/spoonacular.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1.js" }
-  ]
-}
+    "version": 2,
+    "functions": {
+      "api/spoonacular.js": {
+        "runtime": "nodejs18.x"
+      }
+    },
+    "routes": [
+      { "src": "/api/(.*)", "dest": "/api/$1.js" }
+    ]
+  }
+  
