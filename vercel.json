@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "api/scrape.js", "use": "@vercel/node" }
-  ],
+  "functions": {
+    "api/spoonacular.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "env": {
+    "SPOONACULAR_KEY": "@SPOONACULAR_KEY"
+  },
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1.js" }
   ]
