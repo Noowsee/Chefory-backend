@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
 
     const result = {
       title: recipe.title,
-      ingredients: recipe.extendedIngredients.map((i) => i.original),
+      ingredients: recipe.extendedIngredients?.map((i) => i.original) || [],
       steps: recipe.analyzedInstructions?.[0]?.steps.map((s) => s.step) || [
         "Steg ikke tilgjengelig",
       ],
@@ -41,6 +41,15 @@ module.exports = async (req, res) => {
     res.status(200).json(result);
   } catch (error) {
     console.error("❌ Spoonacular-feil:", error.message);
-    res.status(500).json({ error: "Noe gikk galt med Spoonacular" });
+
+    // 🔍 Hvis RapidAPI returnerer spesifikke data
+    if (error.response) {
+      console.error("🔎 RapidAPI responsdata:", error.response.data);
+      return res.status(error.response.status).json({
+        error: error.response.data.message || "Noe gikk galt med Spoonacular",
+      });
+    }
+
+    res.status(500).json({ error: "Ukjent serverfeil med Spoonacular" });
   }
 };
