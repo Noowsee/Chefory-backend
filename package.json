@@ -2,11 +2,13 @@
   "name": "recipe-backend",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "node api/spoonacular.js"
   },
   "engines": {
     "node": "18.x"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0"
   }
 }
