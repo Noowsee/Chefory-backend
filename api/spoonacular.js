@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
   const { query } = req.query;
 
   if (!query) {
-    return res.status(400).json({ error: "Mangler query-parameter" });
+    return res.status(400).json({ error: "❗ Mangler query-parameter" });
   }
 
   try {
@@ -15,7 +15,6 @@ module.exports = async (req, res) => {
           query,
           number: 1,
           addRecipeInformation: true,
-          instructionsRequired: true,
         },
         headers: {
           "X-RapidAPI-Key": process.env.SPOONACULAR_KEY,
@@ -25,24 +24,31 @@ module.exports = async (req, res) => {
       }
     );
 
+    console.log("✅ Spoonacular-svar:", response.data);
+
     const recipe = response.data.results?.[0];
 
     if (!recipe) {
-      return res.status(404).json({ error: "Fant ingen oppskrift" });
+      return res.status(404).json({ error: "❌ Fant ingen oppskrift" });
     }
 
     const result = {
-      title: recipe.title || "Uten tittel",
-      image: recipe.image || null,
+      title: recipe.title || "Ukjent tittel",
+      image: recipe.image || "",
       ingredients: recipe.extendedIngredients?.map((i) => i.original) || [],
-      steps: recipe.analyzedInstructions?.[0]?.steps.map((s) => s.step) || [
-        "Ingen fremgangsmåte funnet",
+      steps: recipe.analyzedInstructions?.[0]?.steps?.map((s) => s.step) || [
+        "Steg ikke tilgjengelig",
       ],
     };
 
-    res.status(200).json(result);
+    return res.status(200).json(result);
   } catch (error) {
-    console.error("❌ Spoonacular-feil:", error.message);
-    res.status(500).json({ error: "Noe gikk galt med Spoonacular" });
+    console.error(
+      "❌ Spoonacular-feil:",
+      error.response?.data || error.message
+    );
+    return res
+      .status(500)
+      .json({ error: "Noe gikk galt med Spoonacular (se logs)" });
   }
 };
