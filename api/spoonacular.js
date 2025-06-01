@@ -2,7 +2,7 @@ require("dotenv").config();
 const axios = require("axios");
 
 module.exports = async (req, res) => {
-  const { query } = req.query;
+  const query = req.query.query;
 
   if (!query) {
     return res.status(400).json({ error: "Mangler query-parameter" });
@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
       image: recipe.image,
       ingredients: recipe.extendedIngredients?.map((i) => i.original) || [],
       steps: recipe.analyzedInstructions?.[0]?.steps.map((s) => s.step) || [
-        "Steg ikke tilgjengelig",
+        "Ingen steg funnet",
       ],
     };
 
