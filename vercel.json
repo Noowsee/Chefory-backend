@@ -1,12 +1,12 @@
 {
     "version": 2,
     "functions": {
-      "api/scrape.js": {
+      "api/spoonacular.js": {
         "runtime": "nodejs18.x"
       }
     },
     "env": {
-      "OPENAI_API_KEY": "@OPENAI_API_KEY"
+      "SPOONACULAR_KEY": "@SPOONACULAR_KEY"
     },
     "routes": [
       { "src": "/api/(.*)", "dest": "/api/$1.js" }
