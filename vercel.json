@@ -6,7 +6,7 @@
       }
     },
     "env": {
-      "SPOONACULAR_KEY": "@SPOONACULAR_KEY"
+      "SPOONACULAR_KEY": "SPOONACULAR_KEY"
     },
     "routes": [
       { "src": "/api/(.*)", "dest": "/api/$1.js" }
